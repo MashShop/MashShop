@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Heist Murder Mission</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; max-width: 900px; margin: auto; }
+        #puzzle { margin: 20px; text-align: left; background: #f9f9f9; padding: 20px; border-radius: 10px; }
+        input, textarea { margin: 5px; padding: 8px; width: 90%; max-width: 400px; }
+        textarea { height: 60px; }
+        #success-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+        #success-content { background: white; padding: 20px; border-radius: 10px; }
+        button { padding: 10px 20px; margin: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Mission: Solve the Tech Heist Murder</h1>
+    <div id="puzzle">
+        <p><strong>Scenario:</strong> In a high-tech lab, a billionaire tech mogul named Elias was found dead after a heist gone wrong. Three suspects were seen fleeing: Sam (business partner, hacker), Garfield (rival inventor, engineer), Andrew (assistant, spy).</p>
+        <p>Three possible weapons: Laser Gun, Poison Dart, Cyber Implant.</p>
+        <p>Three possible motives: Rivalry, Betrayal, Greed.</p>
+        <p><strong>Clues:</strong></p>
+        <ol>
+            <li>The murderer is not the one who had a public rivalry with Elias; that person was Garfield, who argued with him openly.</li>
+            <li>Sam, the hacker, would never use a physical weapon like the laser gun—he prefers digital methods.</li>
+            <li>The motive wasn't greed, as the stolen data was worthless to outsiders.</li>
+            <li>Andrew, the spy, betrayed Elias by leaking secrets, but only after the murder.</li>
+            <li>If Garfield used the cyber implant, then the motive was rivalry; but Garfield denies it.</li>
+            <li>The poison dart was found in Sam's pocket, but he claims it was planted.</li>
+            <li>No one with a motive of betrayal would use the laser gun, as it's too traceable.</li>
+            <li>Andrew had access to the cyber implant, but he swears he didn't touch it.</li>
+            <li>The murderer used the cyber implant, which requires engineering skills that only Garfield has.</li>
+            <li>Sam had a motive of greed for the data, but the data was encrypted and useless without Elias's key.</li>
+        </ol>
+        <p><strong>Hard Questions:</strong></p>
+        <ol>
+            <li>Who is the murderer? (Explain why not the other two, citing clues.)</li>
+            <li>What was the weapon? (Prove it wasn't the others, with logic.)</li>
+            <li>What was the motive? (Show how clues rule out the alternatives.)</li>
+        </ol>
+        <p>1. Murderer: <input type="text" id="murderer" placeholder="e.g., sam"><br>
+           Explanation: <textarea id="exp1" placeholder="Brief explanation"></textarea></p>
+        <p>2. Weapon: <input type="text" id="weapon" placeholder="e.g., laser gun"><br>
+           Explanation: <textarea id="exp2" placeholder="Brief explanation"></textarea></p>
+        <p>3. Motive: <input type="text" id="motive" placeholder="e.g., rivalry"><br>
+           Explanation: <textarea id="exp3" placeholder="Brief explanation"></textarea></p>
+    </div>
+    <button onclick="checkAnswers()">Submit Answers</button>
+    
+    <div id="success-modal">
+        <div id="success-content">
+            <h2>Mission Accomplished!</h2>
+            <p>Redeem your reward:</p>
+            <a id="github-link" href="https://github.com/your-username/your-repo" target="_blank">GitHub Link</a>
+            <br>
+            <button onclick="copyLink()">Copy Link</button>
+            <button onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswers() {
+            const murderer = document.getElementById('murderer').value.toLowerCase().trim();
+            const weapon = document.getElementById('weapon').value.toLowerCase().trim();
+            const motive = document.getElementById('motive').value.toLowerCase().trim();
+            const exp1 = document.getElementById('exp1').value.toLowerCase().trim();
+            const exp2 = document.getElementById('exp2').value.toLowerCase().trim();
+            const exp3 = document.getElementById('exp3').value.toLowerCase().trim();
+            
+            // Correct answers (case-insensitive)
+            const correctMurderer = "garfield";
+            const correctWeapon = "cyber implant";
+            const correctMotive = "rivalry";
+            
+            // Check explanations loosely (must mention key clues)
+            const validExp1 = exp1.includes("sam") && exp1.includes("andrew") && (exp1.includes("clue 1") || exp1.includes("rivalry"));
+            const validExp2 = exp2.includes("laser gun") && exp2.includes("poison dart") && (exp2.includes("clue 9") || exp2.includes("engineering"));
+            const validExp3 = exp3.includes("greed") && exp3.includes("betrayal") && (exp3.includes("clue 3") || exp3.includes("worthless"));
+            
+            if (murderer === correctMurderer && weapon === correctWeapon && motive === correctMotive && validExp1 && validExp2 && validExp3) {
+                document.getElementById('success-modal').style.display = 'flex';
+            } else {
+                alert("Incorrect! Double-check your deductions and explanations. Try again.");
+            }
+        }
+        
+        function copyLink() {
+            const link = document.getElementById('github-link').href;
+            navigator.clipboard.writeText(link).then(() => {
+                alert("Link copied to clipboard!");
+            });
+        }
+        
+        function closeModal() {
+            document.getElementById('success-modal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
